@@ -1,15 +1,19 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   HiMiniSquares2X2,
   HiLightBulb,
   HiClipboardDocumentCheck,
 } from "react-icons/hi2";
+import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import SelectCategory from "./_components/SelectCategory";
 import TopicDescription from "./_components/TopicDescription";
 import SelectOption from "./_components/SelectOption";
+import { UserInputContext } from "../_context/UserInputContext";
+import { GenerateCourseLayout_AI } from "@/configs/AiModel";
+import LoadingDialog from "./_components/LoadingDialog";
 
 function CreateCourse() {
   const Stepper = [
@@ -30,7 +34,43 @@ function CreateCourse() {
     },
   ];
 
+   const {userCourseInput,setUserCourseInput}=useContext(UserInputContext);
+
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loading,setLoading]=useState(false);                   
+
+  useEffect(()=>{
+    console.log(userCourseInput)
+  },[])
+
+  const checkStatus=()=>{
+    if(userCourseInput?.length==0){
+      return true;
+    }
+    if(activeIndex==0 &&(userCourseInput?.category?.length==0 || userCourseInput?.category==undefined)){
+      return true;
+    }
+    if(activeIndex==1 &&(userCourseInput?.topic?.length==0 || userCourseInput?.topic==undefined)){
+      return true;
+    }
+    else if(activeIndex==2 && (userCourseInput?.level==undefined || userCourseInput?.duration==undefined || userCourseInput?.displayVideo==undefined || userCourseInput?.noOfChapter==undefined)){
+      return false;
+    }
+      return false;
+  }
+
+  const GenerateCourseLayout= async()=>{
+    setLoading(true)
+    const BASIC_PROMPT='Generate a course tutorial on following detail with field as Course Name, Description, Along with Chapter Name, About, Duration:';
+    const USER_INPUT_PROMPT='Category: '+userCourseInput?.category+', Topic: '+userCourseInput?.topic+' , Level: '+userCourseInput?.level+', Duration: '
+    +userCourseInput?.duration+', NoOf Chapters: '+userCourseInput?.noOfChapter+', in JSON Format';
+    const FINAL_PROMPT = BASIC_PROMPT+USER_INPUT_PROMPT;
+    console.log(FINAL_PROMPT);
+    const result=await GenerateCourseLayout_AI.sendMessage(FINAL_PROMPT);
+    console.log(result.response?.text());
+    console.log(JSON.parse(result.response?.text()));
+    setLoading(false);
+  }
 
   return (
     <div>
@@ -84,17 +124,18 @@ function CreateCourse() {
             Previous
           </Button>
           {activeIndex < 2 && (
-            <Button onClick={() => setActiveIndex(activeIndex + 1)}>
+            <Button disabled={checkStatus()} onClick={() => setActiveIndex(activeIndex + 1)}>
               Next
             </Button>
           )}
           {activeIndex == 2 && (
-            <Button onClick={() => setActiveIndex(activeIndex + 1)}>
+            <Button disabled={checkStatus()}  onClick={() => GenerateCourseLayout()}>
               Generate Course Layout
             </Button>
           )}
         </div>
       </div>
+      <LoadingDialog loading={loading}/>
     </div>
   );
 }

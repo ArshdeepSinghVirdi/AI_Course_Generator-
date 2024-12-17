@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React,{useState} from "react";
 import Header from "../dashboard/_components/Header";
 import { UserInputContext } from "../_context/UserInputContext";
 
