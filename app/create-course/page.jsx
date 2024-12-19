@@ -14,6 +14,11 @@ import SelectOption from "./_components/SelectOption";
 import { UserInputContext } from "../_context/UserInputContext";
 import { GenerateCourseLayout_AI } from "@/configs/AiModel";
 import LoadingDialog from "./_components/LoadingDialog";
+import uuid4 from "uuid4";
+import { useUser } from "@clerk/nextjs";
+import { CourseList } from "@/configs/schema";
+import { db } from "@/configs/db";
+import { useRouter } from "next/navigation";
 
 function CreateCourse() {
   const Stepper = [
@@ -35,6 +40,9 @@ function CreateCourse() {
   ];
 
    const {userCourseInput,setUserCourseInput}=useContext(UserInputContext);
+
+   const {user}=useUser();
+   const router = useRouter();
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading,setLoading]=useState(false);                   
@@ -63,14 +71,34 @@ function CreateCourse() {
     setLoading(true)
     const BASIC_PROMPT='Generate a course tutorial on following detail with field as Course Name, Description, Along with Chapter Name, About, Duration:';
     const USER_INPUT_PROMPT='Category: '+userCourseInput?.category+', Topic: '+userCourseInput?.topic+' , Level: '+userCourseInput?.level+', Duration: '
-    +userCourseInput?.duration+', NoOf Chapters: '+userCourseInput?.noOfChapter+', in JSON Format';
+    +userCourseInput?.duration+', NoOf Chapters: '+userCourseInput?.noOfChapters+', in JSON Format';
     const FINAL_PROMPT = BASIC_PROMPT+USER_INPUT_PROMPT;
     console.log(FINAL_PROMPT);
     const result=await GenerateCourseLayout_AI.sendMessage(FINAL_PROMPT);
     console.log(result.response?.text());
     console.log(JSON.parse(result.response?.text()));
     setLoading(false);
+    SaveCourseLayout(JSON.parse(result.response?.text()));
   }
+
+  const SaveCourseLayout=async(courseLayout)=>{
+    var id = uuid4(); // Course Id
+    setLoading(true);
+    const result = await db.insert(CourseList).values({
+      courseId: id,
+      name:userCourseInput?.topic,
+      level:userCourseInput?.level,
+      category:userCourseInput?.category,
+      courseOutput: courseLayout,
+      createdBy: user?.primaryEmailAddress?.emailAddress,
+      userName:user?.fullName,
+      userProfileImage:user?.imageUrl
+    })
+    console.log("Done");
+    router.replace('/create-course/'+id)
+    setLoading(false);
+  }
+
 
   return (
     <div>
