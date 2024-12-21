@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import { HiOutlinePuzzle } from "react-icons/hi";
 import EditCourseBasicInfo from "./EditCourseBasicInfo";
 import { storage } from "@/configs/firebaseConfig";
@@ -13,6 +13,12 @@ import { CourseList } from "@/configs/schema";
 function CourseBasicInfo({ course, refreshData}) {
 
     const [selectedFile,setSelectedFile]=useState();
+
+    useEffect(()=>{
+      if(course){
+        setSelectedFile(course?.courseBanner)
+      }
+    },[course])
     /**
      * Select file and upload to Firebase Storage
      * @param {*} event 
