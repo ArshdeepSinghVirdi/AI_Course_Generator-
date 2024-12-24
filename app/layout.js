@@ -18,6 +18,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const publishableKey = 'pk_test_cmVzdGVkLWNhcmRpbmFsLTM0LmNsZXJrLmFjY291bnRzLmRldiQ';
   return (
     <html lang="en">
       <body
