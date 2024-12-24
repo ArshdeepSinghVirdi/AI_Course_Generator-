@@ -23,12 +23,12 @@ function DropdownOption({ children, handleOnDelete }) {
   const [openAlert, setOpenAlert] = useState(false);
 
   const handleDeleteClick = () => {
-    handleOnDelete(); // Perform the delete operation
-    setOpenAlert(false); // Close the dialog
+    handleOnDelete(); 
+    setOpenAlert(false); 
   };
 
   const handleCancelClick = () => {
-    setOpenAlert(false); // Reset the dialog state on cancel
+    setOpenAlert(false); 
   };
 
   return (

@@ -37,16 +37,24 @@ function UserCourseList() {
       <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {courseList.length > 0 ? (
           courseList.map((course, index) => (
-            <CourseCard course={course} key={index} refreshData={()=>getUserCourses()} />
+            <CourseCard course={course} key={index} refreshData={() => getUserCourses()} />
           ))
         ) : (
-          <p className="text-gray-500 col-span-full text-center">
-            No courses available.
-          </p>
+          <>
+            <p className="text-gray-500 col-span-full text-center">
+              No courses available.
+            </p>
+            {[1, 2, 3, 4, 5].map((item, index) => (
+              <div
+                key={index}
+                className="w-full mt-5 bg-slate-200 animate-pulse rounded-lg h-[270px]"
+              ></div>
+            ))}
+          </>
         )}
       </div>
     </div>
-  );
+  );  
 }
 
 export default UserCourseList;
