@@ -29,8 +29,8 @@ function ChapterContent({ chapter, content }) {
       </div>
 
       <div>
-        {Array.isArray(content?.chapter) && content.chapter.length > 0 ? (
-          content.chapter.map((item, index) => (
+        {Array.isArray(content?.content?.chapters) && content.content.chapters.length > 0 ? (
+          content.content.chapters.map((item,index) => (
             <div key={index} className="p-5 bg-sky-50 mb-3 rounded-lg">
               <h2 className="font-medium text-xl">{item.title || "No Title Available"}</h2>
               {/* <p className="text-gray-500 whitespace-pre-wrap">{item.explanation || "No Explanation Available"}</p> */}
@@ -40,7 +40,7 @@ function ChapterContent({ chapter, content }) {
                 <code>{item.code_example}</code>
               </pre>
               </div>}
-            </div>
+            </div>   
           ))
         ) : (
           <p></p>
