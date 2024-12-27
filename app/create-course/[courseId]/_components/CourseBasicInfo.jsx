@@ -59,7 +59,7 @@ function CourseBasicInfo({ course, refreshData,edit=true}) {
         </div>
         <div>
             <label htmlFor="upload-image">
-            <Image src={selectedFile?selectedFile:'/placeholder.jpeg'} width={500} height={500} className='w-full rounded-xl h-[350px] object-cover cursor-pointer'/> 
+            <Image src={selectedFile?selectedFile:'/placeholder.jpeg'} width={500} height={500} alt='placeholder' className='w-full rounded-xl h-[350px] object-cover cursor-pointer'/> 
             </label>
             {edit && <input type="file" id="upload-image" className='opacity-0' onChange={onFileSelected}/>}
         </div>

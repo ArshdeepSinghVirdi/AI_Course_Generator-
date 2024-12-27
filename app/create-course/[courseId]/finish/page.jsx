@@ -5,13 +5,14 @@ import { useUser } from "@clerk/nextjs";
 import { and, eq } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Link from "next/link"; 
 import CourseBasicInfo from "../_components/CourseBasicInfo";
 import { HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
 
 function FinishScreen({ params }) {
   const { user } = useUser();
   const [course, setCourse] = useState([]);
-  const [copySuccess, setCopySuccess] = useState(""); 
+  const [copySuccess, setCopySuccess] = useState("");
   const router = useRouter();
 
   const courseId = params.courseId;
@@ -46,7 +47,7 @@ function FinishScreen({ params }) {
       const courseURL = `${process.env.NEXT_PUBLIC_HOST_NAME}/course/view/${course?.courseId}`;
       await navigator.clipboard.writeText(courseURL);
       setCopySuccess("Course URL copied to clipboard!");
-      setTimeout(() => setCopySuccess(""), 3000); 
+      setTimeout(() => setCopySuccess(""), 3000);
     } catch (error) {
       console.error("Failed to copy URL:", error);
     }
@@ -59,14 +60,23 @@ function FinishScreen({ params }) {
       </h2>
       <CourseBasicInfo course={course} refreshData={() => console.log()} />
       <h2 className="mt-3 font-semibold">Course URL:</h2>
-      <div className="text-center text-gray-400 border p-2 round flex gap-5 items-center">
-        {process.env.NEXT_PUBLIC_HOST_NAME}/course/view/{course?.courseId}
-        <HiOutlineClipboardDocumentCheck
-          className="h-5 w-5 cursor-pointer"
-          onClick={handleCopyToClipboard}
-        />
+      <div className="text-center text-gray-400 border p-2 rounded flex gap-5 items-center justify-between">
+        <span>
+          {process.env.NEXT_PUBLIC_HOST_NAME}/course/view/{course?.courseId}
+        </span>
+        <div className="flex items-center gap-3">
+          <HiOutlineClipboardDocumentCheck
+            className="h-5 w-5 cursor-pointer"
+            onClick={handleCopyToClipboard}
+          />
+          <Link href="/dashboard">
+            <button className="px-4 py-2 bg-primary text-white rounded hover:bg-primary-dark">
+              Go to Dashboard
+            </button>
+          </Link>
+        </div>
       </div>
-      {copySuccess && ( 
+      {copySuccess && (
         <p className="text-primary text-center mt-2">{copySuccess}</p>
       )}
     </div>

@@ -1,8 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube'; 
-import { Chapters } from '@/configs/schema';
 import Markdown from 'react-markdown';
-
 
 function ChapterContent({ chapter, content }) {
   const opts = {
@@ -30,18 +28,22 @@ function ChapterContent({ chapter, content }) {
 
       <div>
         {Array.isArray(content?.content?.chapters) && content.content.chapters.length > 0 ? (
-          content.content.chapters.map((item,index) => (
-            <div key={index} className="p-5 bg-sky-50 mb-3 rounded-lg">
-              <h2 className="font-medium text-xl">{item.title || "No Title Available"}</h2>
-              {/* <p className="text-gray-500 whitespace-pre-wrap">{item.explanation || "No Explanation Available"}</p> */}
-              <Markdown className="text-gray-500 whitespace-pre-wrap" >{item?.explanation}</Markdown>
-              {item.code_example&&<div className='p-4 bg-black text-white rounded-md mt-3'>
-              <pre>
-                <code>{item.code_example}</code>
-              </pre>
-              </div>}
-            </div>   
-          ))
+          content.content.chapters.map((item, index) => {
+            const explanationOrDescription = item.explanation || item.description;
+            return (
+              <div key={item.id || index} className="p-5 bg-sky-50 mb-3 rounded-lg">
+                <h2 className="font-medium text-xl">{item.title || "No Title Available"}</h2>
+                <Markdown className="text-gray-500 whitespace-pre-wrap">{explanationOrDescription}</Markdown>
+                {item.code_example && (
+                  <div className="p-4 bg-black text-white rounded-md mt-3">
+                    <pre>
+                      <code>{item.code_example}</code>
+                    </pre>
+                  </div>
+                )}
+              </div>
+            );
+          })
         ) : (
           <p></p>
         )}

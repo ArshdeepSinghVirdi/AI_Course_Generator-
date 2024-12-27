@@ -10,7 +10,7 @@ function CourseStart({ params: paramsPromise }) {
   const [params, setParams] = useState();
   const [course, setCourse] = useState();
   const [selectedChapter, setSelectedChapter] = useState();
-  const [chapterContent,setChapterContent]=useState();
+  const [chapterContent, setChapterContent] = useState();
 
   useEffect(() => {
     const resolveParams = async () => {
@@ -33,7 +33,7 @@ function CourseStart({ params: paramsPromise }) {
       .from(CourseList)
       .where(eq(CourseList?.courseId, params?.courseId));
     setCourse(result[0]);
-    GetSelectedChapterContent(0)
+    GetSelectedChapterContent(0);
   };
 
   const GetSelectedChapterContent = async (chapterId) => {
@@ -46,12 +46,15 @@ function CourseStart({ params: paramsPromise }) {
           eq(Chapters.courseId, course?.courseId)
         )
       );
-      setChapterContent(result[0]);
+    setChapterContent(result[0]);
   };
 
   return (
     <div>
-      <div className="fixed md:w-72 h-screen hidden md:block border-r shadow-sm">
+      <div
+        className="fixed md:w-72 h-screen hidden md:block border-r shadow-sm overflow-y-auto"
+        style={{ height: "100vh" }} 
+      >
         <h2 className="font-medium text-lg bg-primary p-4 text-white">
           {course?.courseOutput?.courseName}
         </h2>
@@ -73,7 +76,7 @@ function CourseStart({ params: paramsPromise }) {
         </div>
       </div>
       <div className="md:ml-72">
-        <ChapterContent chapter={selectedChapter} content={chapterContent}/>
+        <ChapterContent chapter={selectedChapter} content={chapterContent} />
       </div>
     </div>
   );
