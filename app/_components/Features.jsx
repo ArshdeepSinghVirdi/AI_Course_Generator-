@@ -60,7 +60,7 @@ const Features = () => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 animate-slideUp">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-10 md:mb-12 text-gray-800 px-2 sm:px-0">Why Choose CourseSphere?</h2>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center mb-8 sm:mb-10 md:mb-12 bg-gradient-to-r from-orange-400 to-purple-500 bg-clip-text text-transparent px-2 sm:px-0">Why Choose CourseSphere?</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Experience the future of personalized learning with our cutting-edge AI technology
           </p>
