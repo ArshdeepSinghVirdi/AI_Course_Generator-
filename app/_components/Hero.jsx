@@ -119,7 +119,7 @@ const Hero = () => {
       {isDialogOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 animate-fadeIn">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={toggleDialog} />
-          <div className="relative bg-white rounded-2xl shadow-2xl p-8 max-w-2xl mx-4 transform animate-scaleIn border border-gray-200">
+          <div className="relative bg-white rounded-2xl shadow-2xl p-4 sm:p-8 max-w-xs sm:max-w-md md:max-w-2xl mx-4 w-full transform animate-scaleIn border border-gray-200">
             <button
               onClick={toggleDialog}
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
@@ -130,22 +130,22 @@ const Hero = () => {
             </button>
             
             <div className="mb-6">
-              <h2 className="text-3xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
                 Welcome to CourseSphere
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
                 At CourseSphere, we believe in revolutionizing the way you learn. With our AI-powered course generator, we offer a seamless and customized educational experience tailored to your unique goals and pace.
               </p>
             </div>
 
-            <div className="space-y-4 mb-6">
+            <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
               {[
                 { title: 'AI-Powered Personalization', desc: 'Curated learning paths based on your goals.' },
                 { title: 'Endless Customization', desc: 'Modify course content and topics to suit your needs.' },
                 { title: '24/7 Support', desc: 'Get help whenever you need it.' },
                 { title: 'Free to Use', desc: 'Enjoy all features without hidden charges.' }
               ].map((item) => (
-                <div key={item.title} className="flex items-start space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
+                <div key={item.title} className="flex items-start space-x-2 sm:space-x-3 p-2 sm:p-3 rounded-lg hover:bg-gray-50 transition-colors duration-300">
                   <div className="w-2 h-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-full mt-2 flex-shrink-0" />
                   <div>
                     <strong className="text-gray-800">{item.title}:</strong>
@@ -156,12 +156,12 @@ const Hero = () => {
             </div>
 
             <div className="text-center">
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 mb-2 sm:mb-4 text-sm sm:text-base">
                 Click <strong className="text-orange-600">Get Started</strong> to begin your personalized learning experience today!
               </p>
               <button 
                 onClick={toggleDialog}
-                className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-700 transform hover:scale-105 transition-all duration-300 shadow-lg"
+                className="bg-gradient-to-r from-orange-500 to-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-semibold hover:from-orange-600 hover:to-red-700 transform hover:scale-105 transition-all duration-300 shadow-lg text-base sm:text-lg"
               >
                 Let's Begin!
               </button>
